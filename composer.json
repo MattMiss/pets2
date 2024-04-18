@@ -1,0 +1,13 @@
+{
+  "name": "mattmiss/SDEV328/pets2",
+  "authors" : [
+    {
+      "name": "Matt Miss",
+      "email": "miss.matthew@student.greenriver.edu"
+    }
+  ],
+  "require":
+  {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
