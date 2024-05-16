@@ -59,7 +59,18 @@ $f3->route('GET|POST /order', function($f3) {
 $f3->route('GET|POST /stuffed-order', function($f3) {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $stuffedSize = $_POST['size'];
+        $stuffedMaterial = $_POST['material'];
+        $stuffingType = $_POST['stuffing'];
 
+        if (empty($stuffedMaterial)) {
+            echo "Please fill everything out";
+        } else {
+            $f3 -> set('SESSION.stuffedSize', $stuffedSize);
+            $f3 -> set('SESSION.stuffedMaterial', $stuffedMaterial);
+            $f3 -> set('SESSION.stuffedType', $stuffingType);
+            $f3 -> reroute('summary');
+        }
 
     }
 
@@ -72,8 +83,14 @@ $f3->route('GET|POST /stuffed-order', function($f3) {
 $f3->route('GET|POST /robotic-order', function($f3) {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $accessories = $_POST['accessories'];
 
-
+        if (empty($accessories)) {
+            echo "Please select accessories";
+        } else {
+            $f3 -> set('SESSION.accessories', $accessories);
+            $f3 -> reroute("summary");
+        }
     }
 
     // Render a view page
