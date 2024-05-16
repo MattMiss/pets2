@@ -38,12 +38,13 @@ $f3->route('GET|POST /order', function($f3) {
 
             $petType = $_POST['pet-type'];
 
-            $chosenPet = new Pet($pet, $color);
-            $f3->set('SESSION.pet', $chosenPet);
-
             if ($petType == 'robotic'){
+                $roboticPet = new RoboticPet($pet, $color);
+                $f3->set('SESSION.pet', $roboticPet);
                 $f3->reroute("robotic-order");
             }else if ($petType == 'stuffed'){
+                $stuffedPet = new StuffedPet($pet, $color);
+                $f3->set('SESSION.pet', $stuffedPet);
                 $f3->reroute("stuffed-order");
             }
 
