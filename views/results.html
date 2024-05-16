@@ -14,7 +14,19 @@
 <body>
 <div class="container text-center p-3">
     <h1>Results Page</h1>
-    <span>Thank you for ordering a {{@SESSION.color}} {{@SESSION.pet}}</span>
+    <span>Thank you for ordering a {{@SESSION.pet->getColor()}} {{@SESSION.pet->getAnimal()}}</span>
+    <check if="{{get_class(@SESSION.pet) == 'RoboticPet'}}">
+        <p>This {{get_class(@SESSION.pet)}} has: </p>
+        <repeat group="{{ @SESSION.pet->getAccessories() }}" value="{{ @Accessory }}">
+            <p>{{@Accessory}}</p>
+        </repeat>
+    </check>
+    <check if="{{get_class(@SESSION.pet) == 'StuffedPet'}}">
+        <p>This {{get_class(@SESSION.pet)}} has: </p>
+        <p>Size: {{@SESSION.pet->getSize()}}</p>
+        <p>Material: {{@SESSION.pet->getMaterial()}}</p>
+        <p>Type: {{@SESSION.pet->getStuffingType()}}</p>
+    </check>
 </div>
 </body>
 </html>
