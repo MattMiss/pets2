@@ -35,9 +35,18 @@ $f3->route('GET|POST /order', function($f3) {
             echo 'Please supply a pet';
         }
         else{
-            $f3->set('SESSION.pet', $pet);
-            $f3->set('SESSION.color', $color);
-            $f3->reroute("summary");
+
+            $petType = $_POST['pet-type'];
+
+            $chosenPet = new Pet($pet, $color);
+            $f3->set('SESSION.pet', $chosenPet);
+
+            if ($petType == 'robotic'){
+                $f3->reroute("robotic-order");
+            }else if ($petType == 'stuffed'){
+                $f3->reroute("stuffed-order");
+            }
+
         }
     }
 
@@ -45,6 +54,33 @@ $f3->route('GET|POST /order', function($f3) {
     $view = new Template();
     echo $view->render('views/pet-order.html');
 });
+
+// Define the stuffed pet route
+$f3->route('GET|POST /stuffed-order', function($f3) {
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+
+    }
+
+    // Render a view page
+    $view = new Template();
+    echo $view->render('views/stuffed-order.html');
+});
+
+// Define the robotic pet route
+$f3->route('GET|POST /robotic-order', function($f3) {
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+
+    }
+
+    // Render a view page
+    $view = new Template();
+    echo $view->render('views/robotic-order.html');
+});
+
 
 $f3->route('GET /summary', function() {
 
