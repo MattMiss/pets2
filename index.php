@@ -38,12 +38,13 @@ $f3->route('GET|POST /order', function($f3) {
 
             $petType = $_POST['pet-type'];
 
-            $chosenPet = new Pet($pet, $color);
-            $f3->set('SESSION.pet', $chosenPet);
-
             if ($petType == 'robotic'){
+                $roboticPet = new RoboticPet($pet, $color);
+                $f3->set('SESSION.pet', $roboticPet);
                 $f3->reroute("robotic-order");
             }else if ($petType == 'stuffed'){
+                $stuffedPet = new StuffedPet($pet, $color);
+                $f3->set('SESSION.pet', $stuffedPet);
                 $f3->reroute("stuffed-order");
             }
 
@@ -66,13 +67,14 @@ $f3->route('GET|POST /stuffed-order', function($f3) {
         if (empty($stuffedMaterial)) {
             echo "Please fill everything out";
         } else {
-            $f3 -> set('SESSION.stuffedSize', $stuffedSize);
-            $f3 -> set('SESSION.stuffedMaterial', $stuffedMaterial);
-            $f3 -> set('SESSION.stuffedType', $stuffingType);
+            $f3 -> get('SESSION.pet')->setSize($stuffedSize);
+            $f3 -> get('SESSION.pet')->setMaterial($stuffedMaterial);
+            $f3 -> get('SESSION.pet')->setType($stuffingType);
             $f3 -> reroute('summary');
         }
 
     }
+
 
     // Render a view page
     $view = new Template();
@@ -88,7 +90,7 @@ $f3->route('GET|POST /robotic-order', function($f3) {
         if (empty($accessories)) {
             echo "Please select accessories";
         } else {
-            $f3 -> set('SESSION.accessories', $accessories);
+            $f3 -> get('SESSION.pet')->setAccessories($accessories);
             $f3 -> reroute("summary");
         }
     }
